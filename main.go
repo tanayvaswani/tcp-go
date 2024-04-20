@@ -41,6 +41,23 @@ func (s *Server) acceptLoop() {
 	}
 }
 
+func (s *Server) readLoop(conn net.Conn) {
+	buf := make([]byte, 2048)
+
+	defer conn.Close()
+
+	for {
+		n, err := conn.Read(buf)
+		if err != nil {
+			fmt.Println("Read ERR:", err)
+			continue
+		}
+
+		msg := buf[:n]
+		fmt.Println(string(msg))
+	}
+}
+
 func main() {
 
 }
