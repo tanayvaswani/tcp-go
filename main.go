@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net"
 )
 
@@ -60,5 +61,5 @@ func (s *Server) readLoop(conn net.Conn) {
 
 func main() {
 	server := NewServer(":3000")
-	server.Start()
+	log.Fatal(server.Start())
 }
