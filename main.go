@@ -11,14 +11,14 @@ type Server struct {
 	quitCh chan struct{}
 }
 
-func newServer(listenAddr string) *Server {
+func NewServer(listenAddr string) *Server {
 	return &Server{
 		listenAddr: listenAddr,
 		quitCh: make(chan struct{}),
 	}
 }
 
-func (s *Server) start() error {
+func (s *Server) Start() error {
 	ln, err := net.Listen("tcp", s.listenAddr)
 	if err != nil {
 		return err
@@ -59,5 +59,6 @@ func (s *Server) readLoop(conn net.Conn) {
 }
 
 func main() {
-
+	server := NewServer(":3000")
+	server.Start()
 }
