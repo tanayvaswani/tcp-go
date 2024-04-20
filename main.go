@@ -8,14 +8,16 @@ import (
 
 type Server struct {
 	listenAddr string
-	ln net.Listener
-	quitCh chan struct{}
+	ln         net.Listener
+	quitCh     chan struct{}
+	msgCh      chan []byte
 }
 
 func NewServer(listenAddr string) *Server {
 	return &Server{
 		listenAddr: listenAddr,
-		quitCh: make(chan struct{}),
+		quitCh:     make(chan struct{}),
+		msgCh: make(chan []byte, 10),
 	}
 }
 
@@ -29,7 +31,7 @@ func (s *Server) Start() error {
 
 	go s.acceptLoop()
 
-	<- s.quitCh
+	<-s.quitCh
 
 	return nil
 }
@@ -58,8 +60,7 @@ func (s *Server) readLoop(conn net.Conn) {
 			continue
 		}
 
-		msg := buf[:n]
-		fmt.Println(string(msg))
+		s.msgCh <- buf[:n]
 	}
 }
 
