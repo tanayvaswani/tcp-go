@@ -27,6 +27,8 @@ func (s *Server) Start() error {
 	defer ln.Close()
 	s.ln = ln
 
+	go s.acceptLoop()
+
 	<- s.quitCh
 
 	return nil
@@ -39,6 +41,8 @@ func (s *Server) acceptLoop() {
 			fmt.Println("Accepting ERR:", err)
 			continue
 		}
+
+		fmt.Println("New Connection to Server:", conn.RemoteAddr())
 
 		go s.readLoop(conn)
 	}
