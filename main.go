@@ -7,6 +7,11 @@ type Server struct {
 	ln net.Listener
 }
 
+func newServer(listenAddr string) *Server {
+	return &Server{
+		listenAddr: listenAddr,
+	}
+}
 
 func main() {
 
