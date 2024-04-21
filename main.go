@@ -70,6 +70,8 @@ func (s *Server) readLoop(conn net.Conn) {
 			from: conn.RemoteAddr().String(),
 			payload: buf[:n],
 		}
+
+		conn.Write([]byte("Received a message, Thanks!"))
 	}
 }
 
@@ -78,7 +80,7 @@ func main() {
 
 	go func ()  {
 		for msg := range server.msgCh{
-			fmt.Printf("incoming message from (%s):%s\n", msg.from, string(msg.payload))
+			fmt.Printf("incoming message from (%s): %s\n", msg.from, string(msg.payload))
 		}
 	}()
 
