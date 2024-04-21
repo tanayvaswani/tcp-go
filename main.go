@@ -16,6 +16,8 @@ type Server struct {
 	ln         net.Listener
 	quitCh     chan struct{}
 	msgCh      chan Message
+	// TODO: maintain a map of connections -- peerMap
+	// type could be string or net.Addr
 }
 
 func NewServer(listenAddr string) *Server {
