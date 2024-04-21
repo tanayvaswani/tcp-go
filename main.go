@@ -66,5 +66,12 @@ func (s *Server) readLoop(conn net.Conn) {
 
 func main() {
 	server := NewServer(":3000")
+
+	go func ()  {
+		for msg := range server.msgCh{
+			fmt.Println("incoming message --", string(msg))
+		}
+	}()
+
 	log.Fatal(server.Start())
 }
