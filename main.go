@@ -71,7 +71,7 @@ func (s *Server) readLoop(conn net.Conn) {
 			payload: buf[:n],
 		}
 
-		conn.Write([]byte("Received a message, Thanks!"))
+		conn.Write([]byte("Received a message, Thanks!\n"))
 	}
 }
 
